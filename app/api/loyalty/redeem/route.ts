@@ -6,10 +6,12 @@ export const dynamic = 'force-dynamic';
 
 // { phone, points, orderId } → discount on the Clover order, points taken off (once per order).
 export async function POST(req: Request) {
-  const c = await requireMerchantOrDevice(req);
+  const c = await requireMerchantOrDevice(req, 'base', { action: 'loyalty.redeem' });
   if (!isCtx(c)) return c;
   const b = await readJson(req);
   if (!b) return fail('JSON body required');
-  const r = await redeem(c.merchantId, b.phone, Number(b.points), String(b.orderId ?? ''), String(b.by ?? 'Tableau de bord'));
+  // Who: the signed-in person, or the device plus the cashier's name it sends.
+  const by = c.device && typeof b.by === 'string' && b.by.trim() ? `${b.by.trim().slice(0, 40)} (${c.actor})` : c.actor;
+  const r = await redeem(c.merchantId, b.phone, Number(b.points), String(b.orderId ?? ''), by);
   return r.ok ? ok(r) : fail(r.error, 422);
 }

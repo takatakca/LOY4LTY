@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 // GET ?phone= → balance (signed-in merchant, or a register / kiosk device key).
 export async function GET(req: Request) {
-  const c = await requireMerchantOrDevice(req);
+  const c = await requireMerchantOrDevice(req, 'base', { action: 'loyalty.enroll' });
   if (!isCtx(c)) return c;
   const phone = normalizePhone(new URL(req.url).searchParams.get('phone'));
   if (!phone) return fail('Phone number is not valid.');
@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
 // { phone, name? } → enrolled (or already a member).
 export async function POST(req: Request) {
-  const c = await requireMerchantOrDevice(req);
+  const c = await requireMerchantOrDevice(req, 'base', { action: 'loyalty.enroll' });
   if (!isCtx(c)) return c;
   const b = await readJson(req);
   if (!b) return fail('JSON body required');
