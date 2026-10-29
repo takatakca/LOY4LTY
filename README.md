@@ -35,3 +35,24 @@ Customers R/W · Orders R/W · Payments R · Merchant R
 
 Cette application fait partie de la suite TAKATAK sur Clover : toutes les apps partagent le même dos d'événements (webhooks Clover), le même **client unique reconnu par son numéro de téléphone** (+ courriel), et les mêmes commandes et paiements Clover. Aucune app ne vit en silo : les données qu'elle produit alimentent les autres apps de la suite (voir « Clover API — Main Stuff — Robot Notepad », section 3, déposé au Drive Opérations et dans `~/workspace/clover-apps/`).
 
+
+## État du code (2026-10-28)
+
+Application Next.js 16 qui fonctionne (tests verts, build OK). Mise en ligne : `DEPLOY.md` § 5.
+
+**Ce qui marche :**
+- **Commun (kit Suite TAKATAK, identique dans les 9 apps)** : connexion Clover OAuth v2 (jetons scellés, rafraîchis
+  seuls, supprimés à la désinstallation) · webhook Clover (vérification, X-Clover-Auth, chaque événement une fois) ·
+  base PostgreSQL (ou mémoire en dev) · session marchand · paliers Base / Premium / VIP lus depuis la facturation
+  Clover (`OWN_MERCHANTS` = VIP) · marchand `RNVTBYMCKXEJ1` en lecture seule · lien Suite TAKATAK avec Food Hub ·
+  page d'accueil FR/EN, tableau de bord `/app`, pages légales `/legal/*`, `/api/health`, `/api/cron`, clés d'appareils.
+- Registre de points par téléphone (E.164) ; inscription automatique depuis le client Clover de la commande
+- Points crédités une seule fois par paiement Clover confirmé (webhook P), sur le montant avant taxes, pourboire exclu
+- Échange : rabais posé sur la commande Clover avant paiement, une fois par commande
+- Règles (points par $, valeur du point, minimum) en Premium ; événements Suite `loy4lty.points_awarded` / `points_redeemed`
+
+**Ce qui reste :**
+- Retrait des points sur remboursement ; saisie du téléphone pendant le paiement à l'appareil / la borne (Android).
+
+**Développer :** `npm install` · `npm run dev` · `npm run typecheck` · `npm test` · `npm run build`. Règles pour
+les agents : `AGENTS.md` ; journal : `WORKLOG.md`.
