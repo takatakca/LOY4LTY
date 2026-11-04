@@ -99,4 +99,3 @@ async function balanceProjection(mid: string, ref: string): Promise<{ membership
   if (members.length !== 1 || !Number.isSafeInteger(members[0].data.points) || members[0].data.points < 0) return null;
   return { membership: 'linked', points: members[0].data.points };
 }
-
