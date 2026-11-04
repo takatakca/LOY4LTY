@@ -1,3 +1,4 @@
+- 2026-11-04 | Codex Agent 5 @ cloud | feature/customer-balance-bridge → review branch | done: source/local proof; not deployed | read-only signed verified-customer balance bridge, explicit website-to-one-merchant map, pre-existing ownership only; no shared-kit/funds changes; typecheck + 39 tests + production build pass; actual HTTP/PostgreSQL and process-restart proof passes | next: review companion Food Hub adapter branch, configure server suite URL/key/map and active merchant installation, verify authorized live customer, then normal release.
 # Work log
 
 Newest first, one line per piece of work. Rule: `AGENTS.md` › Work log rule.
