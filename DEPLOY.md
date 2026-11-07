@@ -97,3 +97,8 @@ Voir `README.md` › « État du code ».
    journal d'activité de plus de 180 jours.
 5. Vérifier après déploiement : ouvrir l'app depuis Clover → le menu de gauche, Compte → Profil (votre nom et votre rôle
    « confirmé »), Compte → Actions autorisées, TAKATAK Suite (les apps installées s'affichent « Installée »).
+
+
+## 2026-11-04 — Customer balance bridge
+
+Optional server-only read access for verified Food Hub customers is implemented. Configure the existing dedicated suite URL/key and the same explicit `FOODHUB_CUSTOMER_SUITE_MERCHANTS` website-to-one-merchant map on both servers. PostgreSQL and an active installed merchant record are required in production. See `docs/CUSTOMER_BALANCE_BRIDGE.md` for the full contract, limits and local HTTP/database proof. Keys and real mappings remain in server settings, never Git. No live deployment or Clover certification is claimed.
